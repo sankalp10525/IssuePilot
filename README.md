@@ -1,0 +1,2 @@
+# IssuePilot
+Initial project setup
