@@ -48,10 +48,10 @@ export const issuesApi = {
     return response.data.results
   },
 
-  createComment: async (projectId: number, issueKey: string, content: string) => {
+  addComment: async (projectId: number, issueKey: string, data: { content: string }) => {
     const response = await api.post<Comment>(
       `/projects/${projectId}/issues/${issueKey}/comments/`,
-      { content }
+      data
     )
     return response.data
   },
