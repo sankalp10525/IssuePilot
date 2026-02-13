@@ -242,23 +242,23 @@ export default function ProjectDetailPage() {
           ) : (
             <div className="space-y-2">
               {issues?.map((issue) => (
-                <Link key={issue.id} to={`/projects/${id}/issues/${issue.key}`}>
-                  <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                <Link key={issue.id} to={`/projects/${id}/issues/${issue.key}`} className="group">
+                  <Card className="hover:bg-muted/30 hover:shadow-md transition-all duration-200 cursor-pointer border-l-4 border-l-transparent hover:border-l-primary">
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="font-mono text-sm text-muted-foreground">
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <span className="font-mono text-xs text-muted-foreground bg-muted px-2 py-1 rounded group-hover:bg-primary/10 transition-colors">
                             {issue.key}
                           </span>
-                          <span className="font-medium">{issue.title}</span>
+                          <span className="font-medium group-hover:text-primary transition-colors truncate">{issue.title}</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm px-2 py-1 rounded bg-muted">
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <span className="text-xs px-2.5 py-1 rounded-full bg-muted font-medium group-hover:bg-primary/10 transition-colors">
                             {issue.state.name}
                           </span>
                           {issue.assignee && (
-                            <span className="text-sm text-muted-foreground">
-                              {issue.assignee.username}
+                            <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full group-hover:bg-muted/70 transition-colors">
+                              @{issue.assignee.username}
                             </span>
                           )}
                         </div>

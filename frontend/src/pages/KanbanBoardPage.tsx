@@ -51,20 +51,20 @@ function IssueCard({ issue }: IssueCardProps) {
   }
 
   return (
-    <div className={`border-l-4 ${getPriorityColor(issue.priority)}`}>
-      <Card className="cursor-move hover:shadow-md transition-shadow">
-        <CardContent className="p-3 space-y-2">
+    <div className={`border-l-4 ${getPriorityColor(issue.priority)} rounded-l-lg`}>
+      <Card className="cursor-move hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 bg-card/50 backdrop-blur-sm">
+        <CardContent className="p-3 space-y-2.5">
           <div className="flex items-start justify-between gap-2">
-            <span className="text-xs font-mono text-muted-foreground">{issue.key}</span>
-            <span className="text-lg">{getTypeIcon(issue.issue_type)}</span>
+            <span className="text-xs font-mono text-muted-foreground bg-muted/50 px-1.5 py-0.5 rounded">{issue.key}</span>
+            <span className="text-lg hover:scale-110 transition-transform">{getTypeIcon(issue.issue_type)}</span>
           </div>
-          <h4 className="text-sm font-medium line-clamp-2">{issue.title}</h4>
-          <div className="flex items-center justify-between">
-            <Badge variant="outline" className="text-xs capitalize">
+          <h4 className="text-sm font-medium line-clamp-2 leading-snug hover:text-primary transition-colors">{issue.title}</h4>
+          <div className="flex items-center justify-between pt-1 border-t border-border/50">
+            <Badge variant="outline" className="text-xs capitalize font-medium hover:bg-primary/10 transition-colors">
               {issue.priority}
             </Badge>
             {issue.assignee && (
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full font-medium">
                 @{issue.assignee.username}
               </div>
             )}
@@ -107,19 +107,19 @@ interface ColumnProps {
 function Column({ state, issues }: ColumnProps) {
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      todo: 'bg-gray-100 dark:bg-gray-800',
-      in_progress: 'bg-blue-50 dark:bg-blue-950',
-      done: 'bg-green-50 dark:bg-green-950',
+      todo: 'bg-gradient-to-b from-gray-50 to-gray-100/50 dark:from-gray-800 dark:to-gray-900/50 border-gray-200',
+      in_progress: 'bg-gradient-to-b from-blue-50 to-blue-100/50 dark:from-blue-950 dark:to-blue-900/30 border-blue-200',
+      done: 'bg-gradient-to-b from-green-50 to-green-100/50 dark:from-green-950 dark:to-green-900/30 border-green-200',
     }
-    return colors[category] || 'bg-gray-100'
+    return colors[category] || 'bg-gradient-to-b from-gray-50 to-gray-100/50 border-gray-200'
   }
 
   return (
-    <div className={`flex flex-col rounded-lg ${getCategoryColor(state.category)} p-4 min-w-[300px]`}>
-      <div className="flex items-center justify-between mb-4">
+    <div className={`flex flex-col rounded-xl ${getCategoryColor(state.category)} p-4 min-w-[300px] border-2 shadow-sm hover:shadow-md transition-shadow`}>
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-border/50">
         <div className="flex items-center gap-2">
-          <h3 className="font-semibold">{state.name}</h3>
-          <Badge variant="secondary">{issues.length}</Badge>
+          <h3 className="font-semibold text-base">{state.name}</h3>
+          <Badge variant="secondary" className="font-semibold">{issues.length}</Badge>
         </div>
       </div>
       

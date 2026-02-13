@@ -109,13 +109,15 @@ export default function ProjectsPage() {
                   <Input
                     id="key"
                     name="key"
-                    placeholder="MAP"
+                    placeholder="PROJ"
                     value={formData.key}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      // Allow only uppercase letters and numbers
+                      const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
+                      setFormData({ ...formData, key: value })
+                    }}
                     required
                     maxLength={10}
-                    pattern="[A-Z]+"
-                    title="Only uppercase letters"
                     className="uppercase"
                   />
                   <p className="text-xs text-muted-foreground">
@@ -160,15 +162,21 @@ export default function ProjectsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects?.map((project) => (
-          <Link key={project.id} to={`/projects/${project.id}`}>
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
+          <Link key={project.id} to={`/projects/${project.id}`} className="group">
+            <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 hover:-translate-y-1 bg-gradient-to-br from-card to-card/50">
+              <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-2">
-                    {project.icon && <span className="text-2xl">{project.icon}</span>}
+                  <div className="flex items-center gap-3">
+                    {project.icon && (
+                      <div className="text-3xl group-hover:scale-110 transition-transform duration-300">
+                        {project.icon}
+                      </div>
+                    )}
                     <div>
-                      <CardTitle>{project.name}</CardTitle>
-                      <CardDescription className="text-sm font-mono">
+                      <CardTitle className="group-hover:text-primary transition-colors">
+                        {project.name}
+                      </CardTitle>
+                      <CardDescription className="text-sm font-mono bg-muted px-2 py-0.5 rounded mt-1 inline-block">
                         {project.key}
                       </CardDescription>
                     </div>
@@ -176,15 +184,16 @@ export default function ProjectsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
                   {project.description || 'No description'}
                 </p>
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
+                <div className="flex items-center justify-between text-sm text-muted-foreground border-t pt-3">
+                  <div className="flex items-center gap-1.5 hover:text-primary transition-colors">
                     <Users className="h-4 w-4" />
-                    <span>{project.member_count} members</span>
+                    <span className="font-medium">{project.member_count}</span>
+                    <span>members</span>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <Calendar className="h-4 w-4" />
                     <span>{formatDate(project.created_at)}</span>
                   </div>

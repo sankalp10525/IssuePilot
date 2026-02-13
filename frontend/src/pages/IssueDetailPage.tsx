@@ -197,19 +197,21 @@ export default function IssueDetailPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-gradient-to-r from-muted/50 to-transparent p-6 rounded-lg -mx-6 mb-2">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="sm" onClick={() => navigate(`/projects/${id}`)}>
+          <Button variant="ghost" size="sm" onClick={() => navigate(`/projects/${id}`)} className="hover:bg-background/80">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">{getTypeIcon(issue.issue_type)}</span>
+            <div className="flex items-center gap-3">
+              <span className="text-3xl">{getTypeIcon(issue.issue_type)}</span>
               <h1 className="text-3xl font-bold">{issue.title}</h1>
             </div>
-            <p className="text-sm text-muted-foreground mt-1">
-              {issue.key} • Created {formatDate(issue.created_at)}
+            <p className="text-sm text-muted-foreground mt-2 flex items-center gap-2">
+              <span className="font-mono bg-muted px-2 py-0.5 rounded">{issue.key}</span>
+              <span>•</span>
+              <span>Created {formatDate(issue.created_at)}</span>
             </p>
           </div>
         </div>
@@ -243,9 +245,9 @@ export default function IssueDetailPage() {
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           {/* Description */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Description</CardTitle>
+          <Card className="border-l-4 border-l-primary/20 hover:border-l-primary/40 transition-colors">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg">Description</CardTitle>
             </CardHeader>
             <CardContent>
               {editingDescription ? (
@@ -288,11 +290,12 @@ export default function IssueDetailPage() {
           </Card>
 
           {/* Comments */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MessageSquare className="h-5 w-5" />
-                Comments ({comments?.length || 0})
+          <Card className="border-l-4 border-l-blue-500/20 hover:border-l-blue-500/40 transition-colors">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-blue-500" />
+                Comments
+                <span className="text-sm font-normal text-muted-foreground">({comments?.length || 0})</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -319,22 +322,22 @@ export default function IssueDetailPage() {
               {/* Comments List */}
               <div className="space-y-4">
                 {comments?.map((comment) => (
-                  <div key={comment.id} className="flex gap-3">
-                    <Avatar>
-                      <AvatarFallback>
+                  <div key={comment.id} className="flex gap-3 p-3 rounded-lg hover:bg-muted/30 transition-colors group">
+                    <Avatar className="ring-2 ring-muted group-hover:ring-primary/20 transition-all">
+                      <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 font-semibold">
                         {comment.author.username.substring(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm">
+                        <span className="font-semibold text-sm group-hover:text-primary transition-colors">
                           {comment.author.full_name || comment.author.username}
                         </span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">
                           {formatDateTime(comment.created_at)}
                         </span>
                       </div>
-                      <p className="text-sm whitespace-pre-wrap">{comment.content}</p>
+                      <p className="text-sm whitespace-pre-wrap leading-relaxed">{comment.content}</p>
                     </div>
                   </div>
                 ))}
@@ -382,21 +385,21 @@ export default function IssueDetailPage() {
         {/* Sidebar */}
         <div className="space-y-4">
           {/* Status */}
-          <Card>
+          <Card className="border-2 hover:shadow-md transition-all">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Status</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Status</CardTitle>
             </CardHeader>
             <CardContent>
-              <Badge variant="outline" className="w-full justify-center">
+              <Badge variant="outline" className="w-full justify-center py-2 text-sm font-semibold hover:bg-primary/5 transition-colors">
                 {issue.state.name}
               </Badge>
             </CardContent>
           </Card>
 
           {/* Details */}
-          <Card>
+          <Card className="border-2 hover:shadow-md transition-all">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Details</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Priority */}
