@@ -13,34 +13,25 @@ A comprehensive issue tracking system featuring custom workflows, real-time noti
 ## 📸 Screenshots
 
 ### Projects Dashboard
-![Projects Dashboard](docs/screenshots/projects-page.png)
-*Modern project management interface with gradient cards, hover animations, and real-time statistics.*
+Modern project management interface with gradient cards, hover animations, and real-time statistics.
 
 ### Kanban Board
-![Kanban Board](docs/screenshots/kanban-board.png)
-*Drag-and-drop issue management with visual workflow states, optimistic updates, and smooth transitions.*
+Drag-and-drop issue management with visual workflow states, optimistic updates, and smooth transitions.
 
 ### Issue Detail Page
-![Issue Detail](docs/screenshots/issue-detail.png)
-*Comprehensive issue view with inline editing, comments, watchers, state transitions, and activity tracking.*
+Comprehensive issue view with inline editing, comments, watchers, state transitions, and activity tracking.
 
 ### Search & Filters
-![Search Page](docs/screenshots/search-page.png)
-*Full-text search across all projects with advanced filtering by type, priority, status, and project.*
+Full-text search across all projects with advanced filtering by type, priority, status, and project.
 
 ### Notifications Center
-![Notifications](docs/screenshots/notifications.png)
-*Real-time notification system with unread badges, type-specific icons, and direct navigation to related issues.*
+Real-time notification system with unread badges, type-specific icons, and direct navigation to related issues.
 
 ### Activity Feed
-![Activity Feed](docs/screenshots/activity-feed.png)
-*Timeline of all project events with actor information, timestamps, and contextual icons.*
+Timeline of all project events with actor information, timestamps, and contextual icons.
 
 ### Dark Mode
-![Dark Mode](docs/screenshots/dark-mode.png)
-*Complete dark theme support with smooth transitions and persistent preference storage.*
-
-> **Note**: To add screenshots, take screenshots of your running application and save them to `docs/screenshots/` directory with the names shown above.
+Complete dark theme support with smooth transitions and persistent preference storage.
 
 ## ✨ Features
 
