@@ -151,6 +151,23 @@ export interface Notification {
 
 export interface Event {
   id: number
+  event_type:
+    | 'issue_created'
+    | 'issue_updated'
+    | 'issue_deleted'
+    | 'state_changed'
+    | 'comment_added'
+    | 'attachment_added'
+    | 'assignee_changed'
+    | 'sprint_changed'
+  actor: User | null
+  issue_key?: string
+  data: Record<string, any>
+  created_at: string
+}
+
+export interface Event {
+  id: number
   event_type: string
   actor: User
   issue_key?: string

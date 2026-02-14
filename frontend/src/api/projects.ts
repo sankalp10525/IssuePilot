@@ -1,5 +1,5 @@
 import api from './client'
-import type { Project, ProjectDetail, ProjectMembership, Board, Epic, Sprint, Workflow } from './types'
+import type { Project, ProjectDetail, ProjectMembership, Board, Epic, Sprint, Workflow, Event } from './types'
 
 interface PaginatedResponse<T> {
   count: number
@@ -93,6 +93,11 @@ export const projectsApi = {
 
   closeSprint: async (boardId: number, sprintId: number) => {
     const response = await api.post<Sprint>(`/boards/${boardId}/sprints/${sprintId}/close/`)
+    return response.data
+  },
+
+  getActivity: async (projectId: number) => {
+    const response = await api.get<Event[]>(`/projects/${projectId}/activity/`)
     return response.data
   },
 }

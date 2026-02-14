@@ -1,7 +1,11 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { useAuthStore } from '@/store/authStore'
-import { Bell, Search, Settings, LogOut } from 'lucide-react'
+import { useTheme } from '@/contexts/ThemeContext'
+import { notificationsApi } from '@/api/notifications'
+import { Bell, Search, Settings, LogOut, Sun, Moon } from 'lucide-react'
 import { Button } from './ui/button'
+import { Badge } from './ui/badge'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +18,14 @@ import { Avatar, AvatarFallback } from './ui/avatar'
 
 export default function Layout() {
   const { user, logout } = useAuthStore()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
+
+  const { data: unreadCount } = useQuery({
+    queryKey: ['notifications-unread-count'],
+    queryFn: () => notificationsApi.getUnreadCount(),
+    refetchInterval: 30000, // Refetch every 30 seconds
+  })
 
   const handleLogout = () => {
     logout()
@@ -40,12 +51,38 @@ export default function Layout() {
           </div>
 
           <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="transition-transform hover:scale-110"
+            >
+              {theme === 'light' ? (
+                <Moon className="h-5 w-5" />
+              ) : (
+                <Sun className="h-5 w-5" />
+              )}
+            </Button>
+
             <Button variant="ghost" size="icon" onClick={() => navigate('/search')}>
               <Search className="h-5 w-5" />
             </Button>
 
-            <Button variant="ghost" size="icon" onClick={() => navigate('/notifications')}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/notifications')}
+              className="relative"
+            >
               <Bell className="h-5 w-5" />
+              {unreadCount && unreadCount.count > 0 && (
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs"
+                >
+                  {unreadCount.count > 9 ? '9+' : unreadCount.count}
+                </Badge>
+              )}
             </Button>
 
             <DropdownMenu>

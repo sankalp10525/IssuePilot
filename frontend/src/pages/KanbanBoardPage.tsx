@@ -11,6 +11,7 @@ import {
   useSensors,
   DragStartEvent,
   DragEndEvent,
+  useDroppable,
 } from '@dnd-kit/core'
 import { arrayMove, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { issuesApi } from '@/api/issues'
@@ -26,6 +27,7 @@ import type { Issue, WorkflowState } from '@/api/types'
 
 interface IssueCardProps {
   issue: Issue
+  projectId?: number
 }
 
 function IssueCard({ issue }: IssueCardProps) {
@@ -75,7 +77,8 @@ function IssueCard({ issue }: IssueCardProps) {
   )
 }
 
-function SortableIssueCard({ issue }: IssueCardProps) {
+function SortableIssueCard({ issue, projectId }: IssueCardProps) {
+  const navigate = useNavigate()
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: issue.id,
     data: {
@@ -90,11 +93,16 @@ function SortableIssueCard({ issue }: IssueCardProps) {
     opacity: isDragging ? 0.5 : 1,
   }
 
+  const handleClick = (e: React.MouseEvent) => {
+    // Only navigate if not dragging
+    if (!isDragging && projectId) {
+      navigate(`/projects/${projectId}/issues/${issue.key}`)
+    }
+  }
+
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Link to={`/projects/${issue.project_id}/issues/${issue.key}`}>
-        <IssueCard issue={issue} />
-      </Link>
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners} onClick={handleClick}>
+      <IssueCard issue={issue} />
     </div>
   )
 }
@@ -102,9 +110,18 @@ function SortableIssueCard({ issue }: IssueCardProps) {
 interface ColumnProps {
   state: WorkflowState
   issues: Issue[]
+  projectId: number
 }
 
-function Column({ state, issues }: ColumnProps) {
+function Column({ state, issues, projectId }: ColumnProps) {
+  const { setNodeRef } = useDroppable({
+    id: `droppable-${state.id}`,
+    data: {
+      type: 'column',
+      stateId: state.id,
+    },
+  })
+
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
       todo: 'bg-gradient-to-b from-gray-50 to-gray-100/50 dark:from-gray-800 dark:to-gray-900/50 border-gray-200',
@@ -115,7 +132,7 @@ function Column({ state, issues }: ColumnProps) {
   }
 
   return (
-    <div className={`flex flex-col rounded-xl ${getCategoryColor(state.category)} p-4 min-w-[300px] border-2 shadow-sm hover:shadow-md transition-shadow`}>
+    <div ref={setNodeRef} className={`flex flex-col rounded-xl ${getCategoryColor(state.category)} p-4 min-w-[300px] border-2 shadow-sm hover:shadow-md transition-shadow`}>
       <div className="flex items-center justify-between mb-4 pb-3 border-b border-border/50">
         <div className="flex items-center gap-2">
           <h3 className="font-semibold text-base">{state.name}</h3>
@@ -124,9 +141,9 @@ function Column({ state, issues }: ColumnProps) {
       </div>
       
       <SortableContext items={issues.map((i) => i.id)}>
-        <div className="space-y-2 flex-1">
+        <div className="space-y-2 flex-1 min-h-[200px]">
           {issues.map((issue) => (
-            <SortableIssueCard key={issue.id} issue={issue} />
+            <SortableIssueCard key={issue.id} issue={issue} projectId={projectId} />
           ))}
           {issues.length === 0 && (
             <div className="text-sm text-muted-foreground text-center py-8">
@@ -309,7 +326,7 @@ export default function KanbanBoardPage() {
                     }
                   }}
                 >
-                  <Column state={state} issues={issuesByState[state.id] || []} />
+                  <Column state={state} issues={issuesByState[state.id] || []} projectId={id} />
                 </div>
               </SortableContext>
             </div>

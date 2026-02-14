@@ -141,6 +141,23 @@ export default function IssueDetailPage() {
     },
   })
 
+  const transitionMutation = useMutation({
+    mutationFn: ({ toStateId }: { toStateId: number }) =>
+      issuesApi.transition(id, issueKey!, toStateId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['issue', id, issueKey] })
+      queryClient.invalidateQueries({ queryKey: ['issues', id] })
+      toast({ title: 'Success', description: 'Issue status updated successfully' })
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Error',
+        description: error.response?.data?.message || 'Failed to update status',
+        variant: 'destructive',
+      })
+    },
+  })
+
   const handleUpdateField = (field: keyof Issue, value: any) => {
     updateIssueMutation.mutate({ [field]: value })
   }
@@ -390,9 +407,28 @@ export default function IssueDetailPage() {
               <CardTitle className="text-sm font-medium text-muted-foreground">Status</CardTitle>
             </CardHeader>
             <CardContent>
-              <Badge variant="outline" className="w-full justify-center py-2 text-sm font-semibold hover:bg-primary/5 transition-colors">
-                {issue.state.name}
-              </Badge>
+              <Select
+                value={issue.state.id.toString()}
+                onValueChange={(value) => {
+                  const toStateId = parseInt(value)
+                  transitionMutation.mutate({ toStateId })
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue>
+                    <Badge variant="outline" className="w-full justify-center py-1 text-sm font-semibold">
+                      {issue.state.name}
+                    </Badge>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {project?.workflow.states.map((state) => (
+                    <SelectItem key={state.id} value={state.id.toString()}>
+                      {state.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </CardContent>
           </Card>
 
