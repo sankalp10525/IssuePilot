@@ -1,0 +1,55 @@
+export default function Logo({ className = "h-8 w-8" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 200 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Background Circle */}
+      <circle cx="100" cy="100" r="90" fill="url(#gradient1)" />
+      
+      {/* Pilot Wing Left */}
+      <path d="M50 100 L20 120 L30 100 L20 80 Z" fill="white" opacity="0.9" />
+      
+      {/* Pilot Wing Right */}
+      <path d="M150 100 L180 120 L170 100 L180 80 Z" fill="white" opacity="0.9" />
+      
+      {/* Issue Card Stack */}
+      <rect x="65" y="70" width="70" height="20" rx="4" fill="white" opacity="0.3" />
+      <rect x="65" y="80" width="70" height="20" rx="4" fill="white" opacity="0.5" />
+      <rect x="65" y="90" width="70" height="20" rx="4" fill="white" opacity="0.7" />
+      
+      {/* Main Issue Card */}
+      <rect x="65" y="100" width="70" height="30" rx="4" fill="white" />
+      
+      {/* Card Details */}
+      <rect x="70" y="105" width="20" height="3" rx="1.5" fill="#3B82F6" />
+      <rect x="70" y="112" width="40" height="3" rx="1.5" fill="#94A3B8" />
+      <rect x="70" y="119" width="30" height="3" rx="1.5" fill="#94A3B8" />
+      
+      {/* Check Mark */}
+      <path
+        d="M120 110 L123 113 L128 108"
+        stroke="#10B981"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      
+      {/* Pilot Path/Arrow */}
+      <path d="M100 140 L100 160" stroke="white" strokeWidth="4" strokeLinecap="round" />
+      <path d="M100 160 L95 155" stroke="white" strokeWidth="4" strokeLinecap="round" />
+      <path d="M100 160 L105 155" stroke="white" strokeWidth="4" strokeLinecap="round" />
+      
+      {/* Gradient Definition */}
+      <defs>
+        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: '#3B82F6', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#1E40AF', stopOpacity: 1 }} />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}

@@ -6,6 +6,7 @@ import { notificationsApi } from '@/api/notifications'
 import { Bell, Search, Settings, LogOut, Sun, Moon } from 'lucide-react'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
+import Logo from './Logo'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,8 +38,9 @@ export default function Layout() {
       <header className="border-b bg-background">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link to="/" className="text-xl font-bold text-primary">
-              IssuePilot
+            <Link to="/" className="flex items-center gap-2 text-xl font-bold text-primary hover:opacity-80 transition-opacity">
+              <Logo className="h-8 w-8" />
+              <span>IssuePilot</span>
             </Link>
             <nav className="hidden md:flex gap-4">
               <Link to="/projects" className="text-sm font-medium hover:text-primary">

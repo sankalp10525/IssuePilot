@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useToast } from '@/components/ui/use-toast'
+import Logo from '@/components/Logo'
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -60,7 +61,10 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted/40">
       <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
+        <CardHeader className="space-y-1 text-center">
+          <div className="flex justify-center mb-4">
+            <Logo className="h-16 w-16" />
+          </div>
           <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
           <CardDescription>Enter your details to get started</CardDescription>
         </CardHeader>
