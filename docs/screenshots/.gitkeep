@@ -1,0 +1,15 @@
+# Screenshots Directory
+
+Place your application screenshots here with the following naming convention:
+
+- `projects-page.png` - Projects dashboard
+- `kanban-board.png` - Kanban board with drag-and-drop
+- `issue-detail.png` - Issue detail page
+- `search-page.png` - Search with filters
+- `notifications.png` - Notifications center
+- `activity-feed.png` - Activity timeline
+- `dark-mode.png` - Dark theme example
+- `project-settings.png` - Project settings page
+
+Recommended size: 1920x1080 or similar 16:9 aspect ratio
+Format: PNG or JPG
